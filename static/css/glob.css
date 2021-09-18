@@ -1,0 +1,31 @@
+:root {
+  --primary: #67C23A;
+  --hovercolor:rgba(0, 167, 0, 0.2);
+  --primary2:rgb(225, 243, 216);
+  --danger: #ff5a6e;
+  --white: #fff;
+  --fontsmall: 18rpx;
+  --fonttitle: 32rpx;
+  --fontlabel:24rpx;
+}
+
+.box {
+	padding: 10px;
+	width: calc(94%);
+	border-radius: 15upx;
+	margin: 20px auto;
+	box-shadow: 0upx 5upx 20upx rgba(0, 0, 0, 0.1);
+}
+.row{
+	display: flex;
+}
+.sprow{
+	display: flex;
+	justify-content: space-between;
+}
+.label{
+	color: #999999;
+}
+.danger{
+	color: var(--danger);
+}

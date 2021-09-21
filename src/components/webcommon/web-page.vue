@@ -9,7 +9,7 @@
       <webtable :total="91" :datas="dataArray" :columns="columns"  :event="tableEvent" ></webtable>
     </div>
     <div class="dialog">
-       
+
       <webdialog :dialog="dialog" >
         <webform slot="body" ></webform>
       </webdialog>
@@ -144,5 +144,17 @@
       align-items: flex-end;
       height: 40px;
     }
+
+
   }
+  .webform{
+    .modulerow {
+      padding: 5px;
+      border-radius: 5px;
+      background-color: #f1f1f1;
+      box-shadow: 0px 0px 0px  0px rgba(0, 0, 0, 0.1);
+      margin-bottom: 10px;
+    }
+  }
+
 </style>

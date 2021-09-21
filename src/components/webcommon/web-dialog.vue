@@ -89,6 +89,7 @@
     padding: 0;
     height: calc(100% - 110px);
     overflow-y: auto;
+   
   }
 
   .el-dialog{

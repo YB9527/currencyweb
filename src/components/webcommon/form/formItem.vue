@@ -143,6 +143,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    justify-content: center;
   }
   .formitemlabel{
     width: 100px;

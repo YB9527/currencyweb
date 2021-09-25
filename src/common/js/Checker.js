@@ -1,40 +1,50 @@
+ function isNull(value){
+	 if(value === null || value === undefined || value === ""){
+	 	 return true;
+	 }
+ }
 
-
-var checkNull = function(value,errortip="不能为空"){
-	if(!value){
+export function checkNull(value,errortip="不能为空"){
+	if(isNull(value)){
 		return errortip;
 	}
 }
-exports.checkNull = checkNull;
 
 
-var checkZJHM = function(value,errortip="证件号码必须是18位"){
-	if (!value || value.length !== 18) {
+export function  checkSelectNull(value,errortip="必选"){
+	if(isNull(value)){
 		return errortip;
 	}
 }
-exports.checkZJHM = checkZJHM;
 
-var checkPhoneNuber = function(value,errortip="联系电话必须是11位"){
-	if (!value || value.length !== 11) {
+
+export function   checkZJHM(value,errortip="证件号码必须是18位"){
+	if (isNull(value) || value.length !== 18) {
 		return errortip;
 	}
 }
-exports.checkPhoneNuber = checkPhoneNuber;
+
+
+export function checkPhoneNuber(value,errortip="联系电话必须是11位"){
+	if (isNull(value) || value.length !== 11) {
+		return errortip;
+	}
+}
+
 
 /**
  * 大于0
  */
-var moreThan0 = function(value,errortip="值必须大于0"){
-	if (!value || parseInt(value) <= 0) {
+export function  moreThan0 (value,errortip="值必须大于0"){
+	if (isNull(value) || parseInt(value) <= 0) {
 		return errortip;
 	}
 }
-exports.moreThan0 = moreThan0;
 
-var checkLength = function(value,{len,errortip}){
-	if (!value || value.length !== len) {
+
+export function checkLength(value,{len,errortip}){
+	if (isNull(value) || value.length !== len) {
 		return errortip?errortip:"长度必须是："+len+"位";
 	}
 }
-exports.checkLength = checkLength;
+

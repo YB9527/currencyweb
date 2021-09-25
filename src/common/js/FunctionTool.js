@@ -4,7 +4,7 @@ var debounceFirstFunction={}
  * @param {Object} fn
  * @param {Object} wait
  */
-export function debounceFirst(tag,fn,{wait,params}){
+function debounceFirst(tag,fn,{wait,params}){
 	if(!wait){
 		wait = 100;
 	}
@@ -18,8 +18,14 @@ export function debounceFirst(tag,fn,{wait,params}){
 		},wait);
 	}
 }
-
-
+exports.debounceFirst = debounceFirst;
+/* debounceFirst("a",()=>{console.log(1111)});
+debounceFirst("a",()=>{console.log(2222)});
+debounceFirst("a",()=>{console.log(2222)});
+debounceFirst("a",()=>{console.log(2222)});
+setTimeout(()=>{
+	 debounce("a",()=>{console.log(444)});
+},1000); */
 
 var debounceFunction={};
 /**
@@ -27,7 +33,7 @@ var debounceFunction={};
  * @param {Object} fn
  * @param {Object} wait
  */
-export function debounceSeq(tag,fn,other){
+function debounceSeq(tag,fn,other){
   if(!other){
     other = {};
   }
@@ -54,7 +60,7 @@ export function debounceSeq(tag,fn,other){
     debounceFunction[tag] = {exe,other};
   }
 }
-
+exports.debounceSeq = debounceSeq;
 
 
 var debounceFunction={};
@@ -63,7 +69,7 @@ var debounceFunction={};
  * @param {Object} fn
  * @param {Object} wait
  */
-export function debounce(tag,fn,other){
+function debounce(tag,fn,other){
   if(!other){
     other = {};
   }
@@ -82,8 +88,14 @@ export function debounce(tag,fn,other){
   },wait);
 	debounceFunction[tag] = exe;
 }
-
-
+exports.debounce = debounce;
+/* debounce("a",()=>{console.log(1111)});
+debounce("a",()=>{console.log(1111)});
+debounce("a",()=>{console.log(1111)});
+debounce("a",()=>{console.log(2222)});
+setTimeout(()=>{
+	 debounce("a",()=>{console.log(3333)});
+},1000); */
 
 
 
@@ -93,7 +105,7 @@ var throttleFunction={}
  * @param {Object} fn
  * @param {Object} wait
  */
-export function throttle(tag,fn,wait){
+function throttle(tag,fn,wait){
 	if(!wait){
 		wait = 100;
 	}
@@ -105,3 +117,13 @@ export function throttle(tag,fn,wait){
 	}
 	throttleFunction[tag] = fn;
 }
+exports.throttle = throttle;
+/* throttle("a",()=>{console.log(1111)});
+throttle("a",()=>{console.log(2222)});
+
+setTimeout(()=>{
+	 throttle("a",()=>{console.log(3333)});
+	 throttle("a",()=>{console.log(1111)});
+	 throttle("a",()=>{console.log(2222)});
+	 throttle("a",()=>{console.log(3333)});
+},1000); */

@@ -1,15 +1,15 @@
 <template>
 	<div class="model">
 		<div>
-      <webpage></webpage>
+      <demo></demo>
 		</div>
 	</div>
 </template>
 
 <script>
-  import webpage from '@/components/webcommon/web-page.vue'
+  import demo from './webpagedemo/demo.vue'
 	export default {
-		components:{webpage},
+		components:{demo},
 		data() {
 			return {
 

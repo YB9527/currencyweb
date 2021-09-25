@@ -1,20 +1,20 @@
 <template>
   <div :class="config.class">
-    <div class="title" v-if="title">
+    <!-- <div class="title" v-if="title">
       {{ title }}
-    </div>
+    </div> -->
     <div
       :class="config.rowcolass?config.rowcolass:'modulerow'"
       v-for="(module, index) in moduleArray"
       :key="index">
         <div class="moduletitle">{{module.title}}</div>
         <div :class="module.class" v-if="module.type === 'slot'" >
-          <slot ></slot>
+          <slot :module="module" :data="data"></slot>
         </div>
         <div v-else class="itemarray">
 
-          <div class="module " :style="{width:item.type !== 'slot'?100/rowcount+'%':'100%'}"  v-for="(item, childindex) in module.array" :key="index * 100 + childindex">
-             <myformItem   :column="item" :data="data"></myformItem>
+          <div class="module " v-if="!(item.show === false)" :style="{width: item.type !== 'slot'?100/(item.rowcount?item.rowcount:rowcount)+'%':'100%'}"  v-for="(item, childindex) in module.array" :key="index * 100 + childindex">
+             <myformItem    :column="item" :data="data"></myformItem>
            </div>
         </div>
       </div>
@@ -210,49 +210,16 @@ export default {
     this.test();
   },
   data() {
+		
     return {
-
+			
     }
   },
   methods:{
     test(){
 
     },
-    check(){
-    	let flag = true;
-    	for (let module of this.moduleArray) {
-    		if(module.show === false){
-    			continue;
-    		}
-    		for(let item of module.array){
-    			if(item.show === false){
-    				continue;
-    			}
-    			let error = this.childCheck(item);
-    			if(error){
-    				flag = false;
-    			}
-    		}
-    	}
-    	if(!flag){
-    		return false;
-    	}else{
-    		return true;
-    	}
-    },
-    childCheck(item){
-    	let data = this.data;
-    	let error="";
-    	if(item.check && item.prop){
-    		if(item.check instanceof Array){
-    			error  = item.check[0](this.data[item.prop],item.check[1]);
-    		}else{
-    			error  = item.check(this.data[item.prop]);
-    		}
-    	}
-    	item.error = error;
-    	return error;
-    }
+    
   }
 };
 </script>
@@ -300,11 +267,9 @@ div {
   font-size: 18px;
   line-height: 40px;
 }
-.moduletitle{
-  border-left: 3px solid var(--primary);
-  color: #333;
-  font-weight: 500;
-  padding-left: 3px;
-  letter-spacing: 2px;
+.module{
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
+
 </style>

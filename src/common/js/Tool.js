@@ -1,3 +1,53 @@
+var  { Loading } = require('element-ui');
+var self = "";
+export var setSelf = function (that) {
+
+  self = that;
+};
+var loadingpo = {};
+var loadingflag= "";
+/**
+ *显示 loading
+ * @param self
+ * @param tag 相当于
+ */
+export var loading = function ({text = "加载中...", lock = true, spinner = 'el-icon-loading', target = "app", background, id}) {
+
+ /* if(!self || loadingflag ){
+    return;
+  } */
+  let load = Loading.service({
+    lock: true,
+    text: text,
+    spinner: spinner,
+    target: target,
+    background: background
+  });
+  if (id) {
+    loadingpo[id] = load;
+  } else {
+    loadingflag = load;
+  }
+  return load;
+};
+
+/**
+ * 关闭loading
+ * @param po
+ */
+export var closeLoading = function ({id}) {
+
+  let load = loadingflag;
+  if (id) {
+    load = loadingpo[id];
+  }
+  if (load) {
+    load.close();
+    load ="";
+  }
+};
+
+
 //检查是否数据
 export var checkIsDouble = function(value) {
 	var patrn = /^(-)?\d+(\.\d+)?$/;
@@ -343,7 +393,7 @@ export var itemMove = function(list,item,value){
 	list.splice(index+value,1,tem);
 }
 
-export var arrayReplaceAll = function(srcArray,descArray){
+export var arrayReplace = function(srcArray,descArray){
     if(srcArray&&srcArray.length >0 ){
       srcArray.splice(0,srcArray.length);
     }
@@ -424,15 +474,22 @@ export var mapToArray = function (map,key="key",value="value") {
 
 };
 
-
-export var arrayReplace =  function(srcarray,descarray) {
-	if(srcarray){
-		if( srcarray.length > 0){
-			srcarray.splice(0,srcarray.length);
+export var arrayLevelExpand = function (array,childrenkey="children") {
+	let result = [];
+	
+	var wh =  function(result,array,childrenkey){
+		if(array && array instanceof Array){
+			array.forEach(item=>{
+				 result.push(item);
+				 wh(result,item[childrenkey],childrenkey);
+			})
 		}
-		srcarray.push(...descarray);
 	}
-}
+	wh(result,array,childrenkey);
+	return result;
+};
+
+
 
 export var replaceAttr =  function(array,replaceatt,childrenkey) {
 	if(array && array instanceof Array){

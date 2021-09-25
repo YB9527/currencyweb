@@ -1,6 +1,6 @@
 import  axios from 'axios'
-var baseip  = "http://192.168.3.3:3333";
-//var baseip  = "https://sunliying.shop:11443";
+//var baseip  = "http://192.168.3.3:3333";
+var baseip  = "https://sunliying.shop:11443";
 export var baseURL  = baseip +"/";
 
  class Api {

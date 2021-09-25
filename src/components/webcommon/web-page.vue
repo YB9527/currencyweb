@@ -186,7 +186,7 @@
 			},
 			async selectData(index, data) {
 				this.dialog.showfooter = false,
-				this.formconfig =await this.formdata.getSelectLayout(data);
+				this.formconfig =await this.formdata.getSelectLayout(data[this.formdata.datakey]);
 				//console.log(this.formconfig)
 				this.showFormDialog(this.formconfig);
 				//console.log("查看对象", index, data);
@@ -200,13 +200,13 @@
 			},
 			async updateData(index, data) {
 				this.dialog.showfooter = true,
-				this.formconfig = await this.formdata.getUpdateLayout(data);
+				this.formconfig = await this.formdata.getUpdateLayout(data[this.formdata.datakey]);
 				this.showFormDialog(this.formconfig);
 				//console.log("修改对象", index, data);
 			},
 			async deleteData(index, data) {
 				this.dialog.showfooter = true,
-				this.formconfig =await this.formdata.getDeleteLayout(data);
+				this.formconfig =await this.formdata.getDeleteLayout(data[this.formdata.datakey]);
 				this.showFormDialog(this.formconfig);
 			},
 			//弹出对象窗口

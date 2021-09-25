@@ -1,6 +1,6 @@
 import  axios from 'axios'
 var baseip  = "http://192.168.3.3:3333";
-//var ip  = "https://sunliying.shop:11443";
+//var baseip  = "https://sunliying.shop:11443";
 export var baseURL  = baseip +"/";
 
  class Api {
@@ -66,6 +66,8 @@ export var baseURL  = baseip +"/";
     }).then(res=>{
       if(res.data.isOk){
         return res.data.data;
+      }else{
+        return res.data;
       }
     });
   }
@@ -96,9 +98,9 @@ export var baseURL  = baseip +"/";
     let querydata = {};
     if(searchdata !== undefined){
       if( searchdata instanceof Array){
-          data.searchkey= JSON.stringify(searchdata);
+          querydata.searchkey= JSON.stringify(searchdata);
       }else {
-        data.searchkey= searchdata;
+        querydata.searchkey= searchdata;
       }
     }
     querydata.pagenum = pagenum;
@@ -110,8 +112,15 @@ export var baseURL  = baseip +"/";
    * 查找所有数据
    */
   findDataAll(searchdata,url="findDataAll"){
-
-    return this.post({url,data:searchdata});
+    let querydata = {};
+    if(searchdata !== undefined){
+      if( searchdata instanceof Array){
+          querydata.searchkey= JSON.stringify(searchdata);
+      }else {
+        querydata.searchkey= searchdata;
+      }
+    }
+    return this.post({url,data:querydata});
   }
 	/**修改对象
 	 * @param {Object} data

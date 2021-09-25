@@ -1,4 +1,5 @@
 import * as Tool from "@/common/js/Tool.js"
+import { Message } from 'element-ui';
 class FormData {
 	static SELECT = "SELECT";
 	static CREATE = "CREATE";
@@ -94,7 +95,7 @@ class FormData {
 		this.moduleArray = formconfig.moduleArray;
 		return formconfig;
 	}
-	getCreateLayout() {
+	getCreateLayout(id) {
 		this.state = FormData.CREATE;
 		let formconfig = this.baseModuleArray();
 
@@ -136,16 +137,19 @@ class FormData {
 				break;
 		}
     let datakey = [this.datakey];
+    let self = this;
 		if(promise){
-			promise.then(async result=>{
-        if(result){
-          //debugger
+			promise
+      .then(async result=>{
+        if(result instanceof Object && result.success === false){
+          //返回不成功
+          Message.error(result.msg);
+          callback(false);
+        }else{
           data =await this.findData(data[datakey]);
-
           callback(this.state,data);
         }
-
-			});
+			})
 		}
 		if(checkflag){
 			callback(false);
@@ -162,7 +166,8 @@ class FormData {
 	 * @param {Object} data
 	 */
 	saveData(data){
-    return this.dataApi.saveData(data);
+
+    return this.dataApi.saveData(data)
 		//console.log("保存",data);
 	}
 	/**删除对象

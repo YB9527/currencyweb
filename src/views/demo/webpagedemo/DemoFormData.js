@@ -40,7 +40,7 @@ class AtlasFormData extends MyFormData {
                ],
               optionmap:{1:"指南",2:'指南2'},
           		error:"",
-          		check:Checker.checkNull,
+          		//check:Checker.checkNull,
           },
           {
 						type: "text",
@@ -48,7 +48,7 @@ class AtlasFormData extends MyFormData {
 						text: "*项目名称:",
 						prop: "name",
 						error:"",
-						check:Checker.checkNull
+						//check:Checker.checkNull
 					},
 
 				],
@@ -94,13 +94,10 @@ class AtlasFormData extends MyFormData {
 		}
 	}
 
-	async getSelectLayout(data) {
-		let formconfig = await super.getSelectLayout(data[this.datakey]);
-		return formconfig;
-	}
 
-	async getUpdateLayout(data) {
-		 let formconfig = await super.getUpdateLayout(data[this.datakey]);
+
+	async getUpdateLayout(id) {
+		 let formconfig = await super.getUpdateLayout(id);
 		 this.getEidtModuleArray(formconfig.moduleArray);
 		 return formconfig;
 	}
@@ -109,8 +106,8 @@ class AtlasFormData extends MyFormData {
 		this.getEidtModuleArray(formconfig.moduleArray);
 		return formconfig;
 	}
-	async getDeleteLayout(data) {
-		let formconfig =await super.getDeleteLayout(data[this.datakey]);
+	async getDeleteLayout(id) {
+		let formconfig =await super.getDeleteLayout(id);
 		return formconfig;
 	}
 

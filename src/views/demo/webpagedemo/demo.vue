@@ -29,12 +29,10 @@
 <script>
 	import webpage from '@/components/webcommon/web-page'
 	import DemoFormData from './DemoFormData.js'
-	import ProjectApi from '@/api/ProjectApi.js'
 
 	export default{
 		components:{webpage},
 		data(){
-      let dataApi = new ProjectApi();
 			let atlasFormData = new DemoFormData("项目");
 
 			return {
@@ -56,7 +54,7 @@
              ],
             error:"",
         },
-        dataApi,
+        dataApi:{},
 				searchkey:"",
 				webpage:{
 					search:{
@@ -76,6 +74,7 @@
          //console.log(2,this.webpage.formdata);
 			},
 			async init(){
+        this.dataApi =  this.webpage.formdata.dataApi;
 				this.initData();
 			},
 			async initData(){
@@ -86,7 +85,7 @@
 			//查找条目数量
 			async findDataTotal(){
 				let searchpo = this.getSearchPo();
-				//this.webpage.datatotal =await this.dataApi.findTotal(searchpo);
+				this.webpage.datatotal =await this.dataApi.findTotal(searchpo);
 
 			},
 			//查找
@@ -96,6 +95,7 @@
 				let dataArrayTem =await this.dataApi.findDataAll(searchpo);
 				datacallback(dataArrayTem);
 			},
+
 			searchOk(value,dataCallBack){
 				this.searchkey = value;
 				this.initData();

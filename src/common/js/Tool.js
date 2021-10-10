@@ -1,51 +1,3 @@
-var  { Loading } = require('element-ui');
-var self = "";
-export var setSelf = function (that) {
-
-  self = that;
-};
-var loadingpo = {};
-var loadingflag= "";
-/**
- *显示 loading
- * @param self
- * @param tag 相当于
- */
-export var loading = function ({text = "加载中...", lock = true, spinner = 'el-icon-loading', target = "app", background, id}) {
-
- /* if(!self || loadingflag ){
-    return;
-  } */
-  let load = Loading.service({
-    lock: true,
-    text: text,
-    spinner: spinner,
-    target: target,
-    background: background
-  });
-  if (id) {
-    loadingpo[id] = load;
-  } else {
-    loadingflag = load;
-  }
-  return load;
-};
-
-/**
- * 关闭loading
- * @param po
- */
-export var closeLoading = function ({id}) {
-
-  let load = loadingflag;
-  if (id) {
-    load = loadingpo[id];
-  }
-  if (load) {
-    load.close();
-    load ="";
-  }
-};
 
 
 //检查是否数据
@@ -491,21 +443,47 @@ export var arrayLevelExpand = function (array,childrenkey="children") {
 
 
 
-export var replaceAttr =  function(array,replaceatt,childrenkey) {
+/**
+ * replaceattr 如果是数组那么就有替换顺序
+ */
+export var replaceAttr =  function(array,replaceattr,childrenkey,isdeletekey=true) {
+
 	if(array && array instanceof Array){
 		for(let item of array){
-			for(let key in item){
-				let keyreplace = replaceatt[key];
-				if(keyreplace){
-					item[keyreplace] = item[key];
-					delete  item[key];
+			if(replaceattr instanceof Array){
+				for (var i = 0; i < replaceattr.length; i+=2) {
+					let before = replaceattr[i];
+					let after = replaceattr[i+1];
+					item[after] = item[before];
+					if(isdeletekey){
+						delete  item[before];
+					}
+				}
+			}else{
+				for(let key in replaceattr){
+					let keyreplace = replaceattr[key];
+					if(keyreplace){
+						item[keyreplace] = item[key];
+						if(isdeletekey){
+							delete item[key];
+						}
+					}
 				}
 			}
+			
 			//递归替换下一级数据
 			if(childrenkey){
 				let children = item[childrenkey];
-				replaceAttr(children,replaceatt,childrenkey);
+				replaceAttr(children,replaceattr,childrenkey,isdeletekey);
 			}
 		}
+	}
+}
+export var padRight = function(str,len,symbol="*"){
+	if(str){
+		while(str.length < len){
+			str += symbol; 
+		}
+		return str;
 	}
 }

@@ -17,13 +17,13 @@ import DicJson from '@/common/js/DicJson.js'
 Vue.prototype.$DicJson = DicJson;
 
 import  Api from '@/api/Api.js'
-Vue.prototype.$Api = Api;
+Vue.prototype.$Api =new  Api;
 
 import FJApi from '@/api/FJApi.js'
-Vue.prototype.$FJApiData = new FJApi();
+Vue.prototype.$FJApi = new FJApi();
 
 import SysApi from '@/api/SysApi.js'
-Vue.prototype.$SysApiData =new SysApi();
+Vue.prototype.$SysApi =new SysApi();
 
 import * as functionTool from '@/common/js/FunctionTool.js'
 Vue.prototype.$FunctionTool = functionTool;

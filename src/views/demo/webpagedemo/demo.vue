@@ -1,7 +1,11 @@
 <template>
 	<div class="atlaslistvue"  >
 		<el-button type="primary" @click="test">测试</el-button>
-
+	<el-cascader
+		    :options="testa.options"
+		     :props="{ expandTrigger: 'hover',value:'key',label:'value' }"
+		     v-model="testa.aa"
+		    clearable></el-cascader>
 
 		<webpage v-bind="webpage"
 			ref="webpage"
@@ -50,7 +54,14 @@
                {
                 key: 2,
                 value: '指南',
-               }
+                children:[
+                  {
+                   key: 3,
+                   value: '指3',
+                  },
+                ]
+               },
+
              ],
             error:"",
         },
@@ -71,7 +82,8 @@
 		},
 		methods:{
 			test(){
-         //console.log(2,this.webpage.formdata);
+
+         this.$SysApi.getSystemDateTime();
 			},
 			async init(){
         this.dataApi =  this.webpage.formdata.dataApi;
@@ -91,7 +103,7 @@
 			//查找
 			async findData(pageindex,pagesize,datacallback){
 				let searchpo = this.getSearchPo();
-				//let dataArrayTem =await this.dataApi.findPageData(searchpo,pageindex,pagesize);
+				//let dataArrayTem =await this.dataApi.findDataPage(searchpo,pageindex,pagesize);
 				let dataArrayTem =await this.dataApi.findDataAll(searchpo);
 				datacallback(dataArrayTem);
 			},

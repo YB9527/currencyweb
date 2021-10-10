@@ -27,14 +27,15 @@
                 :value="item.key">
               </el-option>
             </el-select>
-
+				
 			<el-cascader
 				v-else-if="column.type === 'cascader'"
 			    :options="column.options"
-			     :props="{ expandTrigger: 'hover',value:'key',label:'value' }"
-           v-model="data[column.prop]"
-           @change="cascaderChange($event,data,column.prop,)"
-			    clearable></el-cascader>
+			    :props="{value:'key',label:'value' }"
+				v-model="data[column.prop]"
+				@change="cascaderChange($event,data,column.prop)"
+			    clearable>
+			</el-cascader>
 
 
         <el-radio-group @change="childCheck(column)" v-else-if="column.type === 'radio'"  v-model="data[column.prop]">
@@ -147,33 +148,34 @@
 				return text;
 			}
 		},
-    created(){
+		
+		created(){
 
-    },
-    methods:{
+		},
+		methods:{
 
-      childCheck(item){
-        //console.log(3);
-      	let data = this.data;
-      	let error="";
-      	if(item.check && item.prop){
-      		if(item.check instanceof Array){
-      			error  = item.check[0](this.data[item.prop],item.check[1]);
-      		}else{
-      			error  = item.check(this.data[item.prop]);
-      		}
-      	}
-      	item.error = error;
-      	return error;
-      },
-      cascaderChange(value,data,prop){
-        if(value && value.length > 0){
-          data[prop] = value[0];
-        }else{
-           data[prop] = null;
-        }
-      }
-    }
+		  childCheck(item){
+			//console.log(3);
+			let data = this.data;
+			let error="";
+			if(item.check && item.prop){
+				if(item.check instanceof Array){
+					error  = item.check[0](this.data[item.prop],item.check[1]);
+				}else{
+					error  = item.check(this.data[item.prop]);
+				}
+			}
+			item.error = error;
+			return error;
+		  },
+		  cascaderChange(value,data,prop){
+			if(value && value.length > 0){
+			  data[prop] = value[value.length-1];
+			}else{
+			   data[prop] = null;
+			}
+		  }
+		}
 	}
 </script>
 
@@ -234,6 +236,9 @@
 	.el-date-editor {
 	    width: 100%;
 	}
+	.el-cascader{
+		width: 100%;
+	}
 	.pointer {
 		cursor: pointer;
 		color: #3a8ee6;
@@ -254,4 +259,5 @@
 		color: #FFFFFF;
 		line-height: 20px;
 	}
+	
 </style>

@@ -1,14 +1,39 @@
 import  axios from 'axios'
-//var baseip  = "http://192.168.3.3:3333";
-var baseip  = "https://sunliying.shop:11443";
-export var baseURL  = baseip +"/";
+import hjson from "hjson"
 
  class Api {
 	constructor(data={path:""}) {
     let path = data.path?data.path:''
-		this.baseurl = baseURL+path;
-    this.ip = baseip
-	}
+    this.path = path;
+    if( Api.config){
+      this.baseurl = Api.config.ip+"/"+this.path;
+      this.ip = Api.config.ip;
+    }else{
+      this.findConfig();
+    }
+    
+  }
+  findConfig(){
+    if(!Api.config){
+      return axios({
+        //url:"/h6/static/js/config.json",
+        url:"/static/js/config.json",
+        method: 'get',
+        headers:{ "Content-Type": "application/json"},
+      }).then(res=>{
+        Api.config =hjson.parse(res.data);
+        this.baseurl = Api.config.ip+"/"+this.path;
+        this.ip = Api.config.ip;
+        console.log(Api.config);
+        console.log(res);
+      }).catch(e=>{
+        Api.config ={};
+      });
+    }else{
+      return true;
+    }
+  }
+  static config;
   static param2URL(url,data){
     if(data){
       url = url + "?";
@@ -19,13 +44,13 @@ export var baseURL  = baseip +"/";
     }
     return url;
   };
+
   /**
    * get请求
    */
-  get({url,data}) {
+  get({url,data,headers}) {
     url = this.baseurl + url;
     url = Api.param2URL(url,data);
-
     return axios({
       url,
       method: 'get',
@@ -38,7 +63,7 @@ export var baseURL  = baseip +"/";
   /**
    * 查找单条数据
    */
-  findOneData({url,data}){
+  findDataOne({url,data}){
     //debugger
   	return this.get({url,data})
   		.then(data=>{
@@ -89,12 +114,12 @@ export var baseURL  = baseip +"/";
    * 根据id查找
    */
   findDataById(id,url="findDataById"){
-    return this.findOneData({url,data:{id}});
+    return this.findDataOne({url,data:{id}});
   }
   /**
    * 查找分页数据
    */
-  findPageData(searchdata,pagenum,pagecount,url="findPageData"){
+  findDataPage(searchdata,pagenum,pagecount,url="findDataPage"){
     let querydata = {};
     if(searchdata !== undefined){
       if( searchdata instanceof Array){

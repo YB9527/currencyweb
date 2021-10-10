@@ -86,7 +86,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.el-dialog__body {
 		padding: 0;
 	}

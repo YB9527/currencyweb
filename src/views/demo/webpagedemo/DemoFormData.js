@@ -36,6 +36,12 @@ class AtlasFormData extends MyFormData {
                  {
                   key: 2,
                   value: '指南2',
+                  children:[
+                    {
+                     key: 3,
+                     value: '指南3',
+                    },
+                  ]
                  }
                ],
               optionmap:{1:"指南",2:'指南2'},

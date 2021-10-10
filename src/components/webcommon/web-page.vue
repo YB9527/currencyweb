@@ -185,6 +185,7 @@
 				}
 			},
 			async selectData(index, data) {
+        //this.$UiTool.show
 				this.dialog.showfooter = false,
 				this.formconfig =await this.formdata.getSelectLayout(data[this.formdata.datakey]);
 				//console.log(this.formconfig)

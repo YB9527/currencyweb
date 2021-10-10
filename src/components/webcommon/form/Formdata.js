@@ -69,7 +69,7 @@ class FormData {
 		return map;
 	}
 
-  async findData(id) {
+  async findDataById(id) {
   	if(id){
   		return this.dataApi.findDataById(id);
   	}
@@ -78,8 +78,9 @@ class FormData {
 	async getSelectLayout(id) {
 		this.state = FormData.SELECT;
 		let formconfig = this.baseModuleArray();
-		formconfig.title = this.title + "-查看";
-		let data =await this.findData(id);
+		if(this.title)formconfig.title = this.title + "-查看";
+			
+		let data =await this.findDataById(id);
 		formconfig.data = data;
 		this.data = formconfig.data;
 		this.moduleArray = formconfig.moduleArray;
@@ -88,8 +89,8 @@ class FormData {
 	async getUpdateLayout(id) {
 		this.state = FormData.UPDATE;
 		let formconfig = this.baseModuleArray();
-		formconfig.title = this.title + "-修改";
-		let data =await this.findData(id);
+		if(this.title)formconfig.title = this.title + "-修改";
+		let data =await this.findDataById(id);
 		formconfig.data = data;
 		this.data = formconfig.data;
 		this.moduleArray = formconfig.moduleArray;
@@ -99,7 +100,7 @@ class FormData {
 		this.state = FormData.CREATE;
 		let formconfig = this.baseModuleArray();
 
-		formconfig.title = this.title + "-添加"
+		if(this.title)formconfig.title = this.title + "-添加"
 		formconfig.data = {};
 		this.data = formconfig.data;
 		this.moduleArray = formconfig.moduleArray;
@@ -109,7 +110,7 @@ class FormData {
 		this.state = FormData.DELETE;
 		let formconfig = this.baseModuleArray();
 		formconfig.title = this.title + "-删除确认";
-		let data =await this.findData(id);
+		let data =await this.findDataById(id);
 		formconfig.data = data;
 		this.data = formconfig.data;
 		this.moduleArray = formconfig.moduleArray;
@@ -146,7 +147,7 @@ class FormData {
           Message.error(result.msg);
           callback(false);
         }else{
-          data =await this.findData(data[datakey]);
+          data =await this.findDataById(data[datakey]);
           callback(this.state,data);
         }
 			})

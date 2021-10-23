@@ -1,36 +1,48 @@
 import  axios from 'axios'
 import hjson from "hjson"
 
+
  class Api {
 	constructor(data={path:""}) {
     let path = data.path?data.path:''
     this.path = path;
+
     if( Api.config){
       this.baseurl = Api.config.ip+"/"+this.path;
       this.ip = Api.config.ip;
     }else{
       this.findConfig();
     }
-    
+
   }
   findConfig(){
+
     if(!Api.config){
+
       return axios({
         //url:"/h6/static/js/config.json",
-        url:"/static/js/config.json",
+        url:"/static/json/config.json",
         method: 'get',
         headers:{ "Content-Type": "application/json"},
       }).then(res=>{
-        Api.config =hjson.parse(res.data);
+        let config;
+        
+        if(typeof(res.data) === "string"){
+          config = hjson(res.data);
+        }else{
+          config = res.data;
+        }
+        Api.config = config[config.state];
         this.baseurl = Api.config.ip+"/"+this.path;
         this.ip = Api.config.ip;
-        console.log(Api.config);
-        console.log(res);
+        //console.log(Api.config);
+        //console.log(res);
       }).catch(e=>{
+        //debugger
         Api.config ={};
       });
     }else{
-      return true;
+      return Api.config;
     }
   }
   static config;

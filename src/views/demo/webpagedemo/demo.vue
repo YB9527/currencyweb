@@ -82,7 +82,7 @@
 		},
 		methods:{
 			test(){
-
+        this.$WebTool.showModalTip();
          this.$SysApi.getSystemDateTime();
 			},
 			async init(){

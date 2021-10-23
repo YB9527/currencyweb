@@ -7,11 +7,16 @@ import router from './router'
 Vue.config.productionTip = false
 
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+
+import '../static/css/element-variables.scss'
 Vue.use(ElementUI)
 
 import * as  Tool from '@/common/js/Tool.js'
 Vue.prototype.$Tool = Tool;
+
+import * as  WebTool from '@/common/js/WebTool.js'
+Vue.prototype.$WebTool = WebTool;
+
 
 import DicJson from '@/common/js/DicJson.js'
 Vue.prototype.$DicJson = DicJson;

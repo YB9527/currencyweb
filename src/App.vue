@@ -16,7 +16,6 @@ export default {
   created() {
     this.$Api.findConfig().then(res=>{
       this.show = true;
-      console.log(this.$Api)
     });
   }
 }

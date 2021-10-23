@@ -1,0 +1,12 @@
+{
+  "state":"neiwang",
+  "neiwang":{
+    "ip":"http://192.168.3.3:3333"
+  },
+  "waiwang":{
+    "ip":"https://sunliying.shop:11443"
+  },
+  "baseconfig":{
+
+  }
+}

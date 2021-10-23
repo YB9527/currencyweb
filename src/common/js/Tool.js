@@ -487,3 +487,19 @@ export var padRight = function(str,len,symbol="*"){
 		return str;
 	}
 }
+
+export var parse = function(str){
+	if(str){
+		
+		
+		let index = str.indexOf("/*");
+
+		while(index !== -1){
+			let end = str.indexOf("*/",index);
+			str = str.substring(0,index) + str.substring(end+2);
+			index = str.indexOf("/*");
+		}
+		
+		return JSON.parse(str);
+	}
+}

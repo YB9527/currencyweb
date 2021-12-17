@@ -1,4 +1,10 @@
 
+var  { Loading } = require('element-ui');
+var self = "";
+export var setSelf = function (that) {
+
+  self = that;
+};
 
 //检查是否数据
 export var checkIsDouble = function(value) {
@@ -118,6 +124,47 @@ export var toFixed = function(value, bit, defalut) {
 	return defalut ? defalut : 0;
 };
 
+var loadingpo = {};
+var loadingflag= "";
+/**
+ *显示 loading
+ * @param self
+ * @param tag 相当于
+ */
+export var loading = function ({text = "加载中...", lock = true, spinner = 'el-icon-loading', target = "app", background, id}) {
+
+ /* if(!self || loadingflag ){
+    return;
+  } */
+  let load = Loading.service({
+    lock: true,
+    text: text,
+    spinner: spinner,
+    target: target,
+    background: background
+  });
+  if (id) {
+    loadingpo[id] = load;
+  } else {
+    loadingflag = load;
+  }
+  return load;
+};
+/**
+ * 关闭loading
+ * @param po
+ */
+export var closeLoading = function ({id}) {
+
+  let load = loadingflag;
+  if (id) {
+    load = loadingpo[id];
+  }
+  if (load) {
+    load.close();
+    load ="";
+  }
+};
 
 
 
@@ -322,14 +369,14 @@ export var computedAge = function(identityCard, nowDateTime = new Date()) {
 
 
 //条目移动
-/* var itemMove = function(list,item,value){
+ var itemMove = function(list,item,value){
 	 let index = list.indexOf(item);
 	let tem2 =list[index+value];
 	list.splice(index,1,tem2);
 	list.splice(index+value,1,item);
 
 }
-exports.itemMove = itemMove; */
+
 
 export var itemMove = function(list,item,value){
 	 let index =-1;

@@ -102,14 +102,17 @@
     },
   }
 </script>
-<style  scoped>
-  .active{
-  	border: 1px solid var(--primary);
-  }
-  .nodata{
-	text-align: center;
-	min-height: 200px;
-	line-height: 200px;
-	color: #999;
-  }
+<style lang="scss" scoped>
+	.web-custom-list{
+		.active{
+			border: 1px solid var(--primary);
+		}
+		.nodata{
+		text-align: center;
+		min-height: 200px;
+		line-height: 200px;
+		color: #999;
+		}
+	}
+ 
 </style>

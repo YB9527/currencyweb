@@ -1,8 +1,10 @@
 <template>
-	<el-dialog v-if="dialog.show" append-to-body :title="dialog.title" :visible.sync="dialog.show" :width="width">
+	<el-dialog class="webdialogvue"
+		:close-on-click-modal="false"
+		v-if="dialog.show" append-to-body :title="dialog.title" :visible.sync="dialog.show" :width="width">
 		<slot name="body"></slot>
 		<div slot="footer" class="dialog-footer">
-			<slot name="footer" v-if="showfooter&&(showcancel || showok)">
+			<slot name="footer" v-if="showfooter && (showcancel || showok) ">
 				<el-button type="info" v-if="showcancel" @click="cancel">{{canceltext}}</el-button>
 				<el-button type="primary" v-if="showok" @click="ok">{{oktext}}</el-button>
 			</slot>
@@ -22,6 +24,7 @@
 					}
 				}
 			},
+			
 			width: {
 				type: String,
 				default: "600px",
@@ -87,10 +90,16 @@
 </script>
 
 <style lang="scss" scoped>
-	.el-dialog__body {
-		padding: 0;
+	.webdialogvue{
+		.el-dialog__body {
+			padding: 0 !important;
+		}
+		.el-dialog__body{
+			padding: 5px;
+			height: 100%;
+		}
 	}
-
+	
 	/* .el-dialog__body{
     padding: 0;
     height: calc(100% - 110px);

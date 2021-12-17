@@ -26,19 +26,41 @@ export function   checkZJHM(value,errortip="证件号码必须是18位"){
 
 
 export function checkPhoneNuber(value,errortip="联系电话必须是11位"){
+	
 	if (isNull(value) || value.length !== 11) {
 		return errortip;
 	}
 }
 
+/**
+ * 值得大于且是int 类型
+ */
+export function  moreThanInt0 (value,errortip="值必须大于0整数"){
+	
+	if (isNull(value) ) {
+		return errortip;
+	}else {
+		var isnum = /^\d+$/.test(value);
+		if(  !isnum || parseInt(value) <= 0){
+			return errortip;
+		}
+	}
+}
 
 /**
  * 大于0
  */
 export function  moreThan0 (value,errortip="值必须大于0"){
-	if (isNull(value) || parseInt(value) <= 0) {
+	
+	if (isNull(value) ) {
 		return errortip;
+	}else {
+		var isfloat = /^\d+(\.)?\d*$/g.test(value);
+		if(  !isfloat || parseInt(value) <= 0){
+			return errortip;
+		}
 	}
+	
 }
 
 

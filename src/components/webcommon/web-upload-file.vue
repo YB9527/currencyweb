@@ -14,8 +14,27 @@
 		:on-remove="handleRemove"
 		:on-change="onChange"
 		:on-exceed="onExceed">
-		<el-button v-if="elupload.listtype === 'text'" slot="trigger" size="small" type="primary">选取文件</el-button>
+
+		<el-button plain v-if="elupload.listtype === 'text'" slot="trigger" size="mini" type="primary">选取文件</el-button>
+
 		<i v-else class="el-icon-plus"></i>
+<!--      <div slot="file" slot-scope="{file}" style="height: 100%; width: 100%">-->
+<!--        <img-->
+<!--          class="el-upload-list__item-thumbnail"-->
+<!--          :src="file.url" alt="">-->
+<!--        <span class="el-upload-list__item-actions">-->
+<!--        <span class="el-upload-list__item-preview">-->
+<!--          <i class="el-icon-zoom-in"></i>-->
+<!--        </span>-->
+<!--        <span     class="el-upload-list__item-delete" >-->
+<!--          <i class="el-icon-download"></i>-->
+<!--        </span>-->
+<!--        <span class="el-upload-list__item-delete">-->
+<!--          <i class="el-icon-delete"></i>-->
+<!--        </span>-->
+<!--      </span>-->
+<!--        </div>-->
+      <div slot="tip" class="el-upload__tip" v-if="tip" v-html="tip"></div>
     </el-upload>
     <el-dialog :visible.sync="dialogVisible"  append-to-body>
       <img width="100%" :src="dialogImageUrl" alt="">
@@ -34,15 +53,16 @@
 			return {
 				disabled:false,
 				ok: () => {
-				
+
 				}
 			}
 		}
       },
-	  idname:String
+	  idname:String,
+      tip: String
     },
     data() {
-		
+
       let defaultvalue = {
           limit:1,
           autoupload:false,
@@ -82,7 +102,7 @@
 	},
     created(){
 		this.init();
-		
+
 		this.elupload.deleteimageValue = this.deleteimageValue;
 		this.elupload.addimageValue = this.addimageValue;
     },
@@ -93,7 +113,7 @@
       init(){
         this.clearImage();
         this.findImage();
-		
+
       },
       clearImage(){
 
@@ -128,9 +148,9 @@
 				display = 'none';
 		 	}
 		 }else if(this.elupload.disabled){
-			 
+
 			display = 'none';
-			 
+
 		 }
 		 let addnodedom = document.getElementById(this.idname);
 		 //console.log(addnodedom)
@@ -154,7 +174,9 @@
 		this.filelist.splice(index,1);
       },
       handlePictureCardPreview(file) {
-		if(file.url){
+        if(file.download){ // 是否需要下载
+          this.$emit("download", file);
+        }else if(file.url){
 			this.dialogImageUrl = file.url;
 			this.dialogVisible = true;
 		}
@@ -194,5 +216,10 @@
     }
   }
 </script>
+<style scoped lang="scss">
+.el-upload-list__item.is-success .el-upload-list__item-status-label {
+  display: none;
+}
 
+</style>
 

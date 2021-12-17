@@ -1,5 +1,5 @@
 <template>
-  <div :class="config.class">
+  <div class="webform" :class="config.class">
     <!-- <div class="title" v-if="title">
       {{ title }}
     </div> -->
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import myformItem from "./form/formItem.vue";
+import myformItem from "./form/FormItem.vue";
 export default {
   props: {
     data: {
@@ -224,52 +224,52 @@ export default {
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss" scoped>
   .webform{
-
+		.itemarray{
+		    display: flex;
+		    flex-wrap: wrap;
+		  }
+		  .modulerow{
+		      padding: 5px;
+		      border-radius: 5px;
+		      box-shadow: 2px 2px 2px  2px rgba(0, 0, 0, 0.1);
+		      margin-bottom: 10px;
+		  }
+		.label-input {
+		  color: #999999;
+		  font-size: 14px;
+		  margin-right: 20px;
+		}
+		.drawercontent .formitem {
+		  margin-bottom: 10px;
+		  height: 40px;
+		}
+		
+		.el-row {
+		  display: flex;
+		  align-items: center;
+		}
+		
+		div {
+		  word-break: break-word;
+		}
+		.box{
+		  padding: 5px;
+		}
+		.box .formitem {
+		  height: 30px;
+		  margin: 10px;
+		}
+		.title {
+		  font-size: 18px;
+		  line-height: 40px;
+		}
+		.module{
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
   }
-  .itemarray{
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .modulerow{
-      padding: 5px;
-      border-radius: 5px;
-      box-shadow: 2px 2px 2px  2px rgba(0, 0, 0, 0.1);
-      margin-bottom: 10px;
-  }
-.label-input {
-  color: #999999;
-  font-size: 14px;
-  margin-right: 20px;
-}
-.drawercontent .formitem {
-  margin-bottom: 10px;
-  height: 40px;
-}
-
-.el-row {
-  display: flex;
-  align-items: center;
-}
-
-div {
-  word-break: break-word;
-}
-.box{
-  padding: 5px;
-}
-.box .formitem {
-  height: 30px;
-  margin: 10px;
-}
-.title {
-  font-size: 18px;
-  line-height: 40px;
-}
-.module{
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
+  
 
 </style>

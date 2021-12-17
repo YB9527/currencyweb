@@ -4,9 +4,18 @@
 		<div class="search">
 			<websearch v-bind="search" :event="searchEvent"></websearch>
 			<webtablebutton v-bind="tablebutton" :currentstate="tablestate" @add="addData()"></webtablebutton>
+			<slot name="top"></slot>
 		</div>
 		<div class="table">
-			<webtable ref="table" v-if="type === 1" :total="datatotal" :datas="dataArray" :columns="columns" :event="tableEvent">
+			<webtable ref="table" v-if="type === 1" 
+				
+				:total="datatotal" 
+				:datas="dataArray" 
+				:columns="columns" 
+				:event="tableEvent">
+				<template v-slot:item="{scope,item}">
+					<slot name="tableitem" :scope="scope" :item="item"></slot>
+				</template>
 			</webtable>
 			<webcustomlist ref="table" v-else-if="type === 2" :itemSrc="customlistItemSrc" :total="datatotal" :datas="dataArray" :columns="columns" :event="tableEvent">
 				<template v-slot:listitem="{index,item,datas}" >
@@ -47,7 +56,10 @@
 			webform
 		},
 		props: {
-			search: Object,
+			search: {
+				type:Object,
+				
+			},
 			type:{
 				type:Number,
 				default:1,//1表格，2自定义列表
@@ -63,8 +75,8 @@
 			},
 			columns: Array,
 			formdata: {
-        type:FormData
-      },
+				type:FormData
+			},
 			tablebutton: {
 				type: Object,
 				default: () => {
@@ -84,7 +96,7 @@
 					add: "add",
 					update: "update",
 					delete: "delete",
-					value: "update",
+					value: "select",
 				},
 				searchEvent: {
 					ok: (value) => {
@@ -101,6 +113,7 @@
 				tableEvent: {
 					itemClick: this.tableItemClick,
 					handleCurrentChange: async (pageindex,pagesize, datacallback) => {
+						
 						this.$emit("findData", pageindex,pagesize, datacallback);
 					},
 				},
@@ -112,10 +125,7 @@
 				dialogEvent:{
 					ok:(callback)=>{
 						this.$emit("dialogOk");
-
-
 						this.formdata.ok((state,data)=>{
-
 							if(state === false){
 								callback(false);
 								return;
@@ -133,12 +143,14 @@
 								case FormData.SELECT:
 									break;
 							}
+							
 							callback(true);
 						});
 
 					},
 					cancel:()=>{
 						this.$emit("dialogCancel");
+						
 					}
 				},
 				formconfig:{},
@@ -185,7 +197,6 @@
 				}
 			},
 			async selectData(index, data) {
-        //this.$UiTool.show
 				this.dialog.showfooter = false,
 				this.formconfig =await this.formdata.getSelectLayout(data[this.formdata.datakey]);
 				//console.log(this.formconfig)
@@ -198,6 +209,7 @@
 				//console.log(this.formconfig)
 				this.showFormDialog(this.formconfig);
 				//console.log("添加对象",this.formconfig);
+				//console.log("添加对象",this.data);
 			},
 			async updateData(index, data) {
 				this.dialog.showfooter = true,
@@ -219,6 +231,7 @@
 
 			findOnePageData(){
 				 this.$refs.table.handleCurrentChange(1);
+				
 			},
 		}
 	}
@@ -235,16 +248,16 @@
 			height: 40px;
 		}
 
-
-	}
-
-	.webform {
-		.modulerow {
-			padding: 5px;
-			border-radius: 5px;
-			background-color: #f1f1f1;
-			box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.1);
-			margin-bottom: 10px;
+		.webform {
+			.modulerow {
+				padding: 5px;
+				border-radius: 5px;
+				background-color: #f1f1f1;
+				box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.1);
+				margin-bottom: 10px;
+			}
 		}
 	}
+
+	
 </style>

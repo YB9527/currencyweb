@@ -1,6 +1,6 @@
 <template>
   <div class="webtablevue">
-    <el-table :data="datas" highlight-current-row style="width: 100%; height: 100%" class="tables" :row-style="{ height: '35px' }" :cell-style="{ padding: '0px' }" border :header-row-class-name="tableRowClassName" @selection-change="handleSelectionChange" @row-click="clickTable">
+    <el-table  :height="height" :data="datas" highlight-current-row style="width: 100%; height: 100%" class="tables" :row-style="{ height: '35px' }" :cell-style="{ padding: '0px' }" border :header-row-class-name="tableRowClassName" @selection-change="handleSelectionChange" @row-click="clickTable">
       <template v-for="(item, index) of columns">
 
         <el-table-column v-if=" item.type === 'text' " :key="index" :fixed="item.fixed" :prop="item.prop" :type="item.type" :align="item.align ? item.align : 'center'" :width="item.width">
@@ -17,11 +17,15 @@
         <el-table-column v-else-if="item.type === 'slot'" :key="index" :fixed="item.fixed" :align="item.align" :width="item.width">
 
           <template slot="header" slot-scope="scope">
-            <slot name="header" :item="item"> {{item.label}}</slot>
+            <slot name="header" :item="item" >
+							<div style="text-align: center;">
+								{{item.label}}
+							</div>
+						</slot>
           </template>
 
-          <template slot-scope="scope">
-            <slot name="item" :scope="scope" :item="item"></slot>
+          <template slot-scope="scope" >
+            <slot name="item" :scope="{row:scope.row,index:scope.$index}" :item="item"></slot>
           </template>
         </el-table-column>
 
@@ -66,7 +70,7 @@
           <template slot-scope="scope">
             {{
                 item.formatter
-                  ? item.formatter(scope.row[item.prop])
+                  ? item.formatter(scope.row[item.prop],scope.row)
                   : scope.row[item.prop]
               }}
             <!--可以自行增加按钮，请改变点击事件的第二个参数，父组件会根据第二个参数判断当前点击的是什么按钮-->
@@ -82,6 +86,9 @@
 <script>
 export default {
   props: {
+	 height:{
+		 default:"100%"
+	 },
     datas: {
       // 表格数据源 默认为空数组
       type: Array,
@@ -122,7 +129,7 @@ export default {
     },
     pagesizes: {
       type: Array,
-      default: () => [5, 10, 15, 20, 50],
+      default: () => [10, 20, 40, 60, 100],
     },
   },
   data() {
@@ -164,14 +171,17 @@ export default {
       });
     },
     handleSizeChange(pagesize) {
-
-      this.event.handleSizeChange
-        && this.event.handleCurrentChange(1, pagesize, this.reFushData);
+		//this.pagesize = pagesize;	
+		this.$FunctionTool.debounce("excuHandleCurrentChange",this.excuHandleCurrentChange,{params:[1]});	
     },
     handleCurrentChange(pageindex) {
-      this.event.handleCurrentChange
-        && this.event.handleCurrentChange(pageindex, this.pagesize, this.reFushData);
+
+		this.$FunctionTool.debounce("excuHandleCurrentChange",this.excuHandleCurrentChange,{params:[pageindex]});	
     },
+	excuHandleCurrentChange(pageindex){
+		this.event.handleCurrentChange
+		  && this.event.handleCurrentChange(pageindex, this.pagesize, this.reFushData);
+	},
     /**刷新数据
      * @param {Object} datas
      */
@@ -198,4 +208,7 @@ export default {
   height: 100%;
   width: 100%;
 }
+/* ::v-deep .el-table__body-wrapper {
+    overflow-y: auto !important;
+} */
 </style>
